@@ -1,35 +1,9 @@
-import nltk, re, random
+# Adam Calabrigo 2017
 
-''' This class is used to parse the corpus and extract all the dialogue by
-    character. '''
-class Futurama:
-    def __init__(self):
-        self.filename = './data/futurama_scripts.txt'
-        self.characters = {}
-        # go through corpus, extract lines by character
-        apos = ["n't", "'s", "'ll", "'d", "'m", "'re", "ta", "na", "'", "'t", "'ve"]
-        quotes = ["''", "``"]
-        lines = [line.rstrip('\n') for line in open(self.filename)]
-        for line in lines:
-            match = re.match(r'([a-zA-z]+:\s*)(.*)', line)
-            if match:
-                name = match.group(1)[:-2]
-                if name not in self.characters:
-                    self.characters[name] = []
-                tokens = nltk.word_tokenize(match.group(2))
+# This is an example application of the Futurama Corpus. This simple sentence
+# generator outputs sentences designed to sound like Fry.
 
-                if len(tokens) > 0:
-                    fixed_tokens = []
-                    for i in range(1, len(tokens)):
-                        if tokens[i] in apos:
-                            fixed_tokens.append(tokens[i-1] + tokens[i])
-                        elif tokens[i-1] in apos or tokens[i-1] in quotes:
-                            pass
-                        else:
-                            fixed_tokens.append(tokens[i-1])
-
-                    fixed_tokens.append(tokens[len(tokens)-1])
-                    self.characters[name].extend(fixed_tokens)
+import nltk, re, random, futurama_parser
 
 n=5
 numSentences = 5
@@ -37,7 +11,7 @@ punctuation = ",;.!?:"
 end_punct = "!?."
 ngram_DB = [[], [], [], []]
 
-f = Futurama()
+f = futurama_parser.Futurama()
 words = f.characters['Fry']
 
 #produce and store all the ngrams in a list
@@ -49,11 +23,12 @@ tags = [t for w,t in nltk.pos_tag(words)]
 tag_grams = nltk.bigrams(tags)
 pos_dist = nltk.ConditionalFreqDist(tag_grams)
 
-''' Generator output filter. Makes sure responses are of a
-    certain length (so we're not just getting small actual
-    sentences from dialogue). Also uses POS bigrams to make sure
-    sentences are properly formed. '''
 def text_filter(text, dist):
+    ''' Generator output filter. Makes sure responses are of a
+        certain length (so we're not just getting small actual
+        sentences from dialogue). Also uses POS bigrams to make sure
+        sentences are properly formed. '''
+
     # basic length filter to prevent short exclamations
     if len(text) <= 6:
         return False
@@ -92,7 +67,6 @@ while (kbInput is not "q"):
                         x -= 1
                 text.append(random.choice(candidates))
             val = text_filter(text, pos_dist)
-            #print(val)
             if val is True:
                 break
 

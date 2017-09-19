@@ -1,9 +1,13 @@
+# Adam Calabrigo 2017
+
+# Import this class to parse the Futurama Corpus!
+
 import nltk, re
 
-''' This class is used to parse the corpus and extract all the dialogue by
-    character. It creates a dictinary of dialogue, with character being
-    the key '''
 class Futurama:
+    ''' This class is used to parse the corpus and extract all the dialogue by
+        character. It creates a dictinary of dialogue, with character being
+        the key '''
     def __init__(self):
         self.filename = './data/futurama_scripts.txt'
         self.characters = {}
