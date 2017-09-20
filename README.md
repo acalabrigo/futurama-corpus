@@ -12,3 +12,8 @@ Below is a breakdown of the corpus by major character:
 - Amy: 6,582 words
 
 The included futurama_generator.py script shows just one example of an application of this corpus. This script randomly generates dialogue from the character Fry using a simple 5-gram model with some rule filtering. My hope is that others may find some fun with this corpus for future NLP projects.
+
+Requirements:
+- Python 3
+- [NLTK](https://github.com/nltk/nltk.git)
+- [Beautiful Soup](https://pypi.python.org/pypi/beautifulsoup4)
