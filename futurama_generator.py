@@ -67,7 +67,7 @@ while (kbInput is not "q"):
                         x -= 1
                 text.append(random.choice(candidates))
             val = text_filter(text, pos_dist)
-            if val is True:
+            if val:
                 break
 
         #this is a way to clean up the text so there's no extra space before punctuation marks.
