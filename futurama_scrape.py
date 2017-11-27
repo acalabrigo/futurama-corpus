@@ -1,6 +1,7 @@
 # Adam Calabrigo 2017
 
-# This script is used to scrape Futurama scripts.
+# This script is used to scrape Futurama scripts from online and write to the 
+# futurama_scripts.txt file. 
 
 from bs4 import BeautifulSoup
 import sys
@@ -9,7 +10,6 @@ import re
 
 # open corpus file
 f = open('futurama_scripts.txt', 'w')
-f.truncate()
 script_list_url = 'https://theinfosphere.org/Episode_Transcript_Listing'
 
 num_scripts = 0
@@ -38,6 +38,7 @@ def add_script(script_url):
 def get_script_urls():
     ''' Goes through the web page that contains the script links and
         creates a list of links to parse. '''
+    
     req = Request(script_list_url, headers={'User-Agent': 'Mozilla/5.0'})
     html = urlopen(req).read()
     script_urls = []
@@ -59,3 +60,4 @@ for script_url in script_urls[:-4]:
     if lines > 0:
         num_scripts += 1
 print('Scraping complete: {} scripts {} lines scraped'.format(num_scripts, num_lines))
+f.close()
