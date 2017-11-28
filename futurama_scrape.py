@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Adam Calabrigo 2017
 
 # This script is used to scrape Futurama scripts from online and write to the 
