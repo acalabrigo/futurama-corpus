@@ -1,5 +1,6 @@
-# Adam Calabrigo 2017
+#!/usr/bin/env python
 
+# Adam Calabrigo 2017
 # This is an example application of the Futurama Corpus. This simple sentence
 # generator outputs sentences designed to sound like Fry.
 
