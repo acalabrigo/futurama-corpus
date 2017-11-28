@@ -1,5 +1,6 @@
-# Adam Calabrigo 2017
+#!/usr/bin/env python
 
+# Adam Calabrigo 2017
 # Import this class to parse the Futurama Corpus!
 
 import nltk, re
