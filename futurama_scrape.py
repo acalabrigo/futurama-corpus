@@ -18,39 +18,46 @@ num_lines = 0
 def add_script(script_url):
     ''' Pulls the relevant script text from a given
         online script. '''
-
-    req = Request('https://theinfosphere.org' + script_url, headers={'User-Agent': 'Mozilla/5.0'})
-    html = urlopen(req).read()
-    i = 0
-    soup = BeautifulSoup(html, 'lxml')
-    paragraphs = soup.find_all('p')
-    for p in paragraphs:
-        if p.find('b') is not None:
-            if p.find('b').find('a') is not None:
-                name = str(p.find('b').find('a').contents[0])
-            else:
-                name = str(p.find('b').contents[0])
-            f.write(name + re.sub(r'\[.+?\]\s*', '', str(p.contents[len(p.contents) - 1])))
-            i += 1
-    print(script_url, str(i))
-    return i
+    try:
+        req = Request('https://theinfosphere.org' + script_url, headers={'User-Agent': 'Mozilla/5.0'})
+        html = urlopen(req).read()
+        i = 0
+        soup = BeautifulSoup(html, 'lxml')
+        paragraphs = soup.find_all('p')
+        for p in paragraphs:
+            if p.find('b') is not None:
+                if p.find('b').find('a') is not None:
+                    name = str(p.find('b').find('a').contents[0])
+                else:
+                    name = str(p.find('b').contents[0])
+                f.write(name + re.sub(r'\[.+?\]\s*', '', str(p.contents[len(p.contents) - 1])))
+                i += 1
+        print(script_url, str(i))
+        return i
+    except:
+        print('error: failed to make URL list')
+        exit()
 
 def get_script_urls():
     ''' Goes through the web page that contains the script links and
         creates a list of links to parse. '''
     
-    req = Request(script_list_url, headers={'User-Agent': 'Mozilla/5.0'})
-    html = urlopen(req).read()
-    script_urls = []
+    try:
+        req = Request(script_list_url, headers={'User-Agent': 'Mozilla/5.0'})
+        html = urlopen(req).read()
+        script_urls = []
 
-    soup = BeautifulSoup(html, 'lxml')
-    links = soup.find_all('a')
-    for l in links:
-        if len(l.contents) > 0 and len(l.contents[0]) > 10:
-            if str(l.contents[0])[:11] == 'Transcript:':
-                script_urls.append(l.get('href'))
-    return script_urls
-
+        soup = BeautifulSoup(html, 'lxml')
+        links = soup.find_all('a')
+        for l in links:
+            if len(l.contents) > 0 and len(l.contents[0]) > 10:
+                if str(l.contents[0])[:11] == 'Transcript:':
+                    script_urls.append(l.get('href'))
+        return script_urls
+    except:
+        print('error: failed to read from URL list')
+        exit()
+        
 # create the corpus
 
 script_urls = get_script_urls()
