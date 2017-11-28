@@ -38,6 +38,7 @@ def add_script(script_url):
         return i
     except:
         print('error: failed to make URL list')
+        f.close()
         exit()
 
 def get_script_urls():
@@ -58,6 +59,7 @@ def get_script_urls():
         return script_urls
     except:
         print('error: failed to read from URL list')
+        f.close()
         exit()
         
 # create the corpus
